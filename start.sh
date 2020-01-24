@@ -1,20 +1,25 @@
 #!/bin/bash
-REQ="POST"
+TAG_KEY="CPU_Temp"
 
 ID=$(curl -sX GET "https://api.balena-cloud.com/v5/device?\$filter=uuid%20eq%20'$BALENA_DEVICE_UUID'" \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $BALENA_API_KEY" | \
 jq ".d | .[0] | .id")
 
+curl -sX POST \
+"https://api.balena-cloud.com/v5/device_tag" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $BALENA_API_KEY" \
+--data "{ \"device\": \"$ID\", \"tag_key\": \"$TAG_KEY\", \"value\": \"--\" }" > /dev/null
+
 while : ; do
   TEMP=$(expr $(cat /sys/class/thermal/thermal_zone0/temp) / 1000)
   
-  curl -sX $REQ \
-  "https://api.balena-cloud.com/v5/device_tag" \
+  curl -sX PATCH \
+  "https://api.balena-cloud.com/v5/device_tag?\$filter=(device%20eq%20'$DEVICE_ID')%20and%20(tag_key%20eq%20'$TAG_KEY')" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $BALENA_API_KEY" \
-  --data "{ \"device\": \"$ID\", \"tag_key\": \"CPU_Temp\", \"value\": \"$TEMP°C\" }"
+  --data "{ \"device\": \"$ID\", \"tag_key\": \"$TAG_KEY\", \"value\": \"$TEMP°C\" }" > /dev/null
   
-  REQ="PATCH"
   sleep 60
 done
