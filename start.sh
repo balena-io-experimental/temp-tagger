@@ -16,7 +16,7 @@ while : ; do
   TEMP=$(expr $(cat /sys/class/thermal/thermal_zone0/temp) / 1000)
   
   curl -sX PATCH \
-  "https://api.balena-cloud.com/v5/device_tag?\$filter=(device%20eq%20'$DEVICE_ID')%20and%20(tag_key%20eq%20'$TAG_KEY')" \
+  "https://api.balena-cloud.com/v5/device_tag?\$filter=(device%20eq%20'$ID')%20and%20(tag_key%20eq%20'$TAG_KEY')" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $BALENA_API_KEY" \
   --data "{ \"device\": \"$ID\", \"tag_key\": \"$TAG_KEY\", \"value\": \"$TEMP°C\" }" > /dev/null
