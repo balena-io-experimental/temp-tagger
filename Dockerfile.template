@@ -1,7 +1,6 @@
-#FROM balenalib/%%BALENA_MACHINE_NAME%%-alpine
-FROM losant/edge-agent:latest-arm
-
-EXPOSE 8080/tcp
+FROM balenalib/%%BALENA_MACHINE_NAME%%-alpine
+#FROM losant/edge-agent:latest-arm
+#EXPOSE 8080/tcp
  
 RUN install_packages jq
 
