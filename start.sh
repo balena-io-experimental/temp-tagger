@@ -10,6 +10,6 @@ while : ; do
 	-H "Content-Type: application/json" \
 	--data "$DATAJSON" > /dev/null)
 
-	sleep 60
+	sleep $SLEEPING_TIME
 done
 
