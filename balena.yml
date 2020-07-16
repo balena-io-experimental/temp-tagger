@@ -1,0 +1,5 @@
+
+applicationEnvironmentVariables:
+    - LOSANT_WEBHOOK: https://triggers.losant.com/webhooks/0jlassTvcMDBwT1hXY9ZumtOxbVjyBl4nr6ZgPWCaA1$
+    - SLEEPING_TIME: 120
+    
